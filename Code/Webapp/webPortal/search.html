@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SB Admin - Tables</title>
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+<div id="content-wrapper">
+    <div class="container-fluid">
+        <br/>
+        <!-- Search Form  -->
+        <form class="form-inline Form">
+            <div class="form-group mb-2">
+                Student Hash
+            </div>
+            <div style="width: 80%;" class="form-group mx-sm-3 mb-2">
+                <input style="width: 100%;" type="text" class="form-control" id="hash" placeholder="Student Hash">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </form>
+
+        <br/>
+
+        <table class="table table-bordered" id="studentInfo">
+            <thead>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-wrapper -->
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="vendor/datatables/jquery.dataTables.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin.min.js"></script>
+
+<!-- Demo scripts for this page-->
+<script src="js/demo/datatables-demo.js"></script>
+<script>
+
+    $("form.Form").on("submit", function (e) {
+        e.preventDefault();
+
+        let hash = $("input#hash").val();
+        let StudentInfo = '';
+
+        $.ajax({
+            type: 'GET',
+            url: 'http://35.200.177.16:8000/api/auth/verify?hash=' + hash + '',
+            cache: false,
+            complete: function (data, status) {
+                console.log(data);
+                if (status === "success") {
+
+                    StudentInfo += " <tr></tw><th scope = 'col' > Student Number </th>";
+                    StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.file.student_number + "</td></tr>";
+
+                    StudentInfo += "<tr><th scope = 'col' > Name </th>";
+                    StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.file.firstname + "</td></tr>";
+
+                    StudentInfo += "<tr><th scope = 'col' > University </th>";
+                    StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.file.university_name + "</td></tr>";
+
+                    StudentInfo += "<tr><th scope = 'col' > Start Date </th>";
+                    StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.file.start_date + "</td></tr>";
+
+                    StudentInfo += "<tr><th scope = 'col' > End Date </th>";
+                    StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.file.end_date + "</td></tr>";
+
+                    StudentInfo += "<tr><th scope = 'col' > Certificate Hash </th>";
+                    StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.file.certificate_hash + "</td></tr>";
+
+                    StudentInfo += "<tr><th scope = 'col' > Certificate Hash </th>";
+                    StudentInfo += "<td scope='col'><img src='" + data.responseJSON.data.base_url + data.responseJSON.data.file.certificate + "' align='center' width='50%'/></td></tr>";
+
+
+                } else {
+                    alert('Error Occured. Check Node logs.');
+                }
+                $("#tableBody").append(StudentInfo);
+                StudentInfo = "";
+            }
+        });
+    });
+
+</script>
+</body>
+
+</html>
