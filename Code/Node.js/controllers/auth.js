@@ -58,7 +58,7 @@ exports.register = async (req, res, next) => {
                         "values " + "('" + email + "','" + hash + "','active','" + userType + "','" + null + "','" + createdAt + "')";
                     database.executeQuery(res, "User Successfully Created", query);
 
-                    readHTMLFile('/home/deenario/certificate_Verification/backend/email/registerUser.html', function (err, html) {
+                    readHTMLFile('/home/manuja/certificate_Verification/backend/email/registerUser.html', function (err, html) {
                         let template = handlebars.compile(html);
                         let replacements = {
                             email: email,
@@ -208,7 +208,7 @@ exports.resetRequest = async (req, res, next) => {
                                     res.status(500).json(response);
                                 } else {
 
-                                    readHTMLFile('/home/deenario/certificate_Verification/backend/email/passwordReset.html', function (err, html) {
+                                    readHTMLFile('/home/manuja/certificate_Verification/backend/email/passwordReset.html', function (err, html) {
                                         let template = handlebars.compile(html);
                                         let replacements = {
                                             url: url
@@ -434,7 +434,7 @@ function hashFile(query, certificate, firstName, universityName, replacements, e
 
                         database.executeQuery(res, "Student Created Successfully", queryInsert);
 
-                        readHTMLFile('/home/deenario/certificate_Verification/backend/email/certificateEmail.html', function (err, html) {
+                        readHTMLFile('/home/inshar/certificate_Verification/backend/email/certificateEmail.html', function (err, html) {
                             let template = handlebars.compile(html);
 
                             Object.assign(replacements, {hash: dataHash});
